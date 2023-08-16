@@ -1,1 +1,1 @@
-Simple Shell alx project
+Simple Shell SEalx project
