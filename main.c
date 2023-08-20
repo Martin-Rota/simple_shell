@@ -8,27 +8,25 @@
 
 int main(void)
 {
-	char input;
+	char input[1024];
 
 	while (1)
 	{
 		printf("Simple_Shell> ");
 
-		if (fgets(input, sizeof(input), stdin) == NULL)
+		ssize_t bytes_read = read(STDIN_FILENO, input, sizeof(input) - 1);
+		if (bytes_read == -1)
 		{
-			if (feof(stdin))
-			{
-				printf("\nExiting...\n");
-				break;
-			}
-			else
-			{
-				perror("Error reading input");
-				exit(EXIT_FAILURE);
-			}
+			perror("Error reading input");
+			exit(EXIT_FAILURE);
+		}
+		else if (bytes_read == 0)
+		{
+			printf("\nExiting...\n");
+			break;
 		}
 
-		input[strcspn(input, "\n")] = '\0';
+		input[bytes_read - 1] = '\0';
 
 		if (strcmp(input, "exit") == 0)
 		{
