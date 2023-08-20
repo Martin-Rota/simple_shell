@@ -15,6 +15,7 @@ int main(void)
 		printf("Simple_Shell> ");
 
 		ssize_t bytes_read = read(STDIN_FILENO, input, sizeof(input) - 1);
+
 		if (bytes_read == -1)
 		{
 			perror("Error reading input");
@@ -40,6 +41,7 @@ int main(void)
 		{
 			/* Child process */
 			char *args[] = {input, NULL};
+
 			if (execvp(input, args) == -1)
 			{
 				perror("command execution failed");
