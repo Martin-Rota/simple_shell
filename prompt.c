@@ -8,7 +8,7 @@
 
 int prompt()
 {
-	char input[1024], args[];
+	char input[1024];
 	ssize_t bytes_read;
 	pid_t pid;
 
@@ -42,7 +42,10 @@ int prompt()
 		if (pid == 0)
 		{
 			/* Child process */
-			args = {input, NULL};
+			char *args[2];
+
+			args[0] = input;
+			args[1] = NULL;
 
 			if (execvp(input, args) == -1)
 			{
