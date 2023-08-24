@@ -1,13 +1,14 @@
-#include <stdio.h>
+#include "shell.h"
 
 /**
- * main - Entry point of the program
- *
- * Return: Always 0 (Success)
+ * main - creates a simple shell
+ * @ac: argument count
+ * @av: argument vectors
+ * @env: environmental variables
+ * Return: 0 on success
  */
-
-int main(void)
+int main(int ac, char **av, char **env)
 {
-	printf("Hello, world!\n");
-	return (0);
+	if (ac == 1)
+		prompt(av, env);
 }
