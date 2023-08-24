@@ -6,7 +6,7 @@
  * Return: Always 0.
  */
 
-int prompt(void)
+int prompt()
 {
 	char input[1024];
 

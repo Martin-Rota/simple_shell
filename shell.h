@@ -8,4 +8,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
+int prompt();
+int main(int ac, char **av, char **env);
+
 #endif
