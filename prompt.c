@@ -9,12 +9,13 @@
 int prompt()
 {
 	char input[1024];
+	ssize_t bytes_read;
 
 	while (1)
 	{
-		printf("Simple_Shell> ");
+		printf("MySimple_shell$ ");
 
-		ssize_t bytes_read = read(STDIN_FILENO, input, sizeof(input) - 1);
+		bytes_read = read(STDIN_FILENO, input, sizeof(input) - 1);
 
 		if (bytes_read == -1)
 		{
