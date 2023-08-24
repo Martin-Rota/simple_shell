@@ -67,6 +67,8 @@ int prompt()
 		{
 			perror("error creating child process");
 		}
+
+		printf("\n");
 	}
 
 	return (0);
