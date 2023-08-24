@@ -8,8 +8,9 @@
 
 int prompt()
 {
-	char input[1024];
+	char input[1024], args[];
 	ssize_t bytes_read;
+	pid_t pid;
 
 	while (1)
 	{
@@ -36,12 +37,12 @@ int prompt()
 			break;
 		}
 
-		pid_t pid = fork();
+		pid = fork();
 
 		if (pid == 0)
 		{
 			/* Child process */
-			char *args[] = {input, NULL};
+			args = {input, NULL};
 
 			if (execvp(input, args) == -1)
 			{
