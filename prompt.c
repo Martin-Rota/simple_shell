@@ -37,6 +37,8 @@ int prompt()
 			break;
 		}
 
+		while (getchar() != '\n');
+
 		pid = fork();
 
 		if (pid == 0)
@@ -67,8 +69,6 @@ int prompt()
 		{
 			perror("error creating child process");
 		}
-
-		printf("\n");
 	}
 
 	return (0);
