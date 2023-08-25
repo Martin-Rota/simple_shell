@@ -2,22 +2,24 @@
 
 /**
  * prompt - prompts user to enter command
- *
- * Return: Always 0.
+ * @av: argument vector
+ * @env: environmental variables
+ * Return: 0.
  */
 
 int prompt(char **av,char **env)
 {
-	char input[1024];
+	char *input = NULL;
 	ssize_t bytes_read;
 	pid_t pid;
+	size_t input_size = 0;
 
 	while (1)
 	{
 		printf("MySimple_shell$ ");
 		fflush(stdout);
 
-		bytes_read = read(STDIN_FILENO, input, sizeof(input) - 1);
+		bytes_read = getline(&input, &input_size, stdin);
 
 		if (bytes_read == -1)
 		{
@@ -25,15 +27,11 @@ int prompt(char **av,char **env)
 			exit(EXIT_FAILURE);
 		}
 
-		input[bytes_read - 1] = '\0';
-
-		if (strcmp(input, "exit") == 0)
+		if (input[bytes_read - 1] == '\n')
 		{
-			printf("%s: No such file or directory\n", av[0]);
+			input[bytes_read - 1] = '\0';
 		}
-
-		while (getchar() != '\n');
-
+		
 		pid = fork();
 
 		if (pid == 0)
@@ -66,5 +64,6 @@ int prompt(char **av,char **env)
 		}
 	}
 
+	free(input);
 	return (0);
 }
