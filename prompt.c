@@ -6,7 +6,7 @@
  * Return: Always 0.
  */
 
-int prompt()
+int prompt(char **av,char **env)
 {
 	char input[1024];
 	ssize_t bytes_read;
@@ -15,6 +15,7 @@ int prompt()
 	while (1)
 	{
 		printf("MySimple_shell$ ");
+		fflush(stdout);
 
 		bytes_read = read(STDIN_FILENO, input, sizeof(input) - 1);
 
@@ -49,9 +50,9 @@ int prompt()
 			args[0] = input;
 			args[1] = NULL;
 
-			if (execvp(input, args) == -1)
+			if (execve(args[0], args, env) == -1)
 			{
-				perror("command execution failed");
+				printf("%s: Command execution failed\n", av[0]);
 				exit(EXIT_FAILURE);
 			}
 		}

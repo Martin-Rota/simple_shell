@@ -9,11 +9,8 @@
  */
 int main(int ac, char **av, char **env)
 {
-	(void)env;
-	(void)av;
-
 	if (ac == 1)
-		prompt();
+		prompt(av, env);
 
 	return (0);
 }
