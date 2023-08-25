@@ -18,7 +18,6 @@ int prompt(char **av,char **env)
 	while (1)
 	{
 		printf("#cisfun$ ");
-		fflush(stdout);
 
 		bytes_read = getline(&input, &input_size, stdin);
 
