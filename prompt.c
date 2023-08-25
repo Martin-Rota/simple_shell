@@ -25,7 +25,7 @@ void ctrl_D(int bytes_read, char *input)
 
 void prompt(char **av,char **env)
 {
-	char *input = NULL, *args[2];
+	char *input = NULL, *args[1024];
 	ssize_t bytes_read = 0, n = 0;
 	pid_t pid;
 	size_t input_size = 0;
@@ -61,6 +61,7 @@ void prompt(char **av,char **env)
 
 		if (pid == 0)
 		{
+			strtok_args(input, args);
 			if (execve(args[0], args, env) == -1)
 			{
 				printf("%s: No such file or directory\n", av[0]);

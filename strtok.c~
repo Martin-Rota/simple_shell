@@ -1,0 +1,25 @@
+#include "shell.h"
+
+/**
+ * strtok_args - tokenizes a string into arguments
+ * @input: the input string to be tokenized
+ * @args: an array to store the arguments
+ *
+ * Return: the number of arguments
+ */
+int strtok_args(char *input, char **args)
+{
+    char *token;
+    int i = 0;
+
+    token = strtok(input, " \t\n"); // Tokenize based on spaces, tabs, and newline
+    while (token != NULL)
+    {
+        args[i] = token;
+        token = strtok(NULL, " \t\n");
+        i++;
+    }
+    args[i] = NULL; // Set the last element to NULL for execve
+
+    return (i);
+}
