@@ -17,11 +17,8 @@ int prompt(char **av,char **env)
 
 	while (1)
 	{
-		if (isatty(STDIN_FILENO))
-		{
-			printf("#cisfun$ ");
-			fflush(stdout);
-		}
+		printf("#cisfun$ ");
+		fflush(stdout);
 
 		bytes_read = getline(&input, &input_size, stdin);
 
