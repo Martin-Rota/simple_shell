@@ -16,14 +16,17 @@ int prompt(char **av,char **env)
 
 	while (1)
 	{
-		printf("#cisfun$ ");
-		fflush(stdout);
+		if (isatty(STDIN_FILENO))
+		{
+			printf("#cisfun$ ");
+			fflush(stdout);
+		}
 
 		bytes_read = getline(&input, &input_size, stdin);
 
 		if (bytes_read == -1)
 		{
-			perror("Error reading input");
+			free(input);
 			exit(EXIT_FAILURE);
 		}
 
