@@ -9,10 +9,11 @@
 
 int prompt(char **av,char **env)
 {
-	char *input = NULL;
+	char *input = NULL, *args[2];
 	ssize_t bytes_read;
 	pid_t pid;
 	size_t input_size = 0;
+	int status;
 
 	while (1)
 	{
@@ -34,29 +35,28 @@ int prompt(char **av,char **env)
 		{
 			input[bytes_read - 1] = '\0';
 		}
-		
+
 		pid = fork();
+		args[0] = input;
+		args[1] = NULL;
+
+		if (pid == -1)
+		{
+			perror("fork error");
+			free(input);
+			exit(EXIT_FAILURE);
+		}
 
 		if (pid == 0)
 		{
-			/* Child process */
-			char *args[2];
-			int status;
-
-			args[0] = input;
-			args[1] = NULL;
-
 			if (execve(args[0], args, env) == -1)
 			{
 				printf("%s: No such file or directory\n", av[0]);
-				exit(EXIT_FAILURE);
 			}
-			else
-			/* Parent process */
-			wait(&status);
 		}
-	}
 
-	free(input);
+		else
+			wait(&status);
+	}
 	return (0);
 }
