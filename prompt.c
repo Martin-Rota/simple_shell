@@ -24,18 +24,12 @@ int prompt(char **av,char **env)
 			perror("Error reading input");
 			exit(EXIT_FAILURE);
 		}
-		else if (bytes_read == 0)
-		{
-			printf("\nExiting...\n");
-			break;
-		}
 
 		input[bytes_read - 1] = '\0';
 
 		if (strcmp(input, "exit") == 0)
 		{
-			printf("Exiting...\n");
-			break;
+			printf("%s: No such file or directory\n", av[0]);
 		}
 
 		while (getchar() != '\n');
@@ -52,7 +46,7 @@ int prompt(char **av,char **env)
 
 			if (execve(args[0], args, env) == -1)
 			{
-				printf("%s: Command execution failed\n", av[0]);
+				printf("%s: No such file or directory\n", av[0]);
 				exit(EXIT_FAILURE);
 			}
 		}
