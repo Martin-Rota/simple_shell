@@ -41,6 +41,7 @@ int prompt(char **av,char **env)
 		{
 			/* Child process */
 			char *args[2];
+			int status;
 
 			args[0] = input;
 			args[1] = NULL;
@@ -50,20 +51,9 @@ int prompt(char **av,char **env)
 				printf("%s: No such file or directory\n", av[0]);
 				exit(EXIT_FAILURE);
 			}
-		}
-		else if (pid > 0)
-		{
+			else
 			/* Parent process */
-			int status;
-
-			if (wait(&status) == -1)
-			{
-				perror("wait");
-			}
-		}
-		else
-		{
-			perror("error creating child process");
+			wait(&status);
 		}
 	}
 
