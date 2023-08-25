@@ -21,10 +21,9 @@ void ctrl_D(int bytes_read, char *input)
  * prompt - prompts user to enter command
  * @av: argument vector
  * @env: environmental variables
- * Return: 0.
  */
 
-int prompt(char **av,char **env)
+void prompt(char **av,char **env)
 {
 	char *input = NULL, *args[2];
 	ssize_t bytes_read = 0, n = 0;
@@ -71,5 +70,4 @@ int prompt(char **av,char **env)
 		else
 			wait(&status);
 	}
-	return (0);
 }
