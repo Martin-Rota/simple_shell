@@ -1,6 +1,23 @@
 #include "shell.h"
 
 /**
+ * ctrl_D - exits program if Ctrl-D was pressed
+ * @bytes_read: characters read via get_line
+ * @input: user's typed in command
+ *
+ */
+void ctrl_D(int bytes_read, char *input)
+{
+	if (bytes_read == 0) /* handles Ctrl+D */
+	{
+		free(input); /* exit with newline if in shell */
+		if (isatty(STDIN_FILENO))/* ctrl+d prints newline */
+			write(STDOUT_FILENO, "\n", 1);
+		exit(0);
+	}
+}
+
+/**
  * prompt - prompts user to enter command
  * @av: argument vector
  * @env: environmental variables
@@ -20,6 +37,7 @@ int prompt(char **av,char **env)
 		printf("#cisfun$ ");
 
 		bytes_read = getline(&input, &input_size, stdin);
+		ctrl_D(bytes_read, input);
 
 		if (bytes_read == -1)
 		{

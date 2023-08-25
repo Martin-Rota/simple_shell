@@ -10,5 +10,6 @@
 
 int prompt(char **av,char **env);
 int main(int ac, char **av, char **env);
+void ctrl_D(int bytes_read, char *input);
 
 #endif
