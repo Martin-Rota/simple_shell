@@ -25,10 +25,10 @@ void ctrl_D(int bytes_read, char *input)
 
 void prompt(char **av,char **env)
 {
-	char *input = NULL, *args[2];
+	char *ptr, *args;
 	ssize_t bytes_read = 0, n = 0;
 	pid_t pid;
-	size_t input_size = 0;
+	size_t input_size = 20;
 	int status;
 
 	while (1)
@@ -36,39 +36,39 @@ void prompt(char **av,char **env)
 		if (isatty(STDIN_FILENO))
 			printf("#cisfun$ ");
 
-		bytes_read = getline(&input, &input_size, stdin);
-		ctrl_D(bytes_read, input);
+		ptr = malloc(sizeof(char) * input_size)
+		bytes_read = getline(&ptr, &input_size, stdin);
+		ctrl_D(bytes_read, ptr);
 
 		if (bytes_read == -1)
 		{
-			free(input);
-			exit(EXIT_FAILURE);
+			free(ptr);
+			exit(1);
 		}
-
-		while (input[n] != '\n')
-			n++;
-		input[n] = '\0';
-
-		args[0] = input;
-		args[1] = NULL;
-		pid = fork();
-
-		if (pid == -1)
+		if (*ptr != '\n')
 		{
-			perror("fork error");
-			free(input);
-			exit(EXIT_FAILURE);
-		}
+			args = _strtok(ptr);
 
-		if (pid == 0)
-		{
-			if (execve(args[0], args, env) == -1)
+			pid = fork();
+
+			if (pid == -1)
 			{
-				printf("%s: No such file or directory\n", av[0]);
+				perror("fork error");
+				free(ptr);
+				exit(1);
 			}
-		}
 
-		else
-			wait(&status);
+			if (pid == 0)
+			{
+				if (execve(args[0], args, env) == -1)
+				{
+					printf("%s: No such file or directory\n", av[0]);
+				}
+			}
+
+			else
+				wait(&status);
+		}
 	}
+	free(ptr);
 }
