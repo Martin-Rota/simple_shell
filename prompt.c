@@ -55,7 +55,7 @@ void prompt(char **av,char **env)
 			{
 				perror("fork error");
 				free(ptr);
-				exit(0);
+				exit(1);
 			}
 
 			if (pid == 0)
