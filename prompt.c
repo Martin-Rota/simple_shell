@@ -33,7 +33,8 @@ void prompt(char **av,char **env)
 
 	while (1)
 	{
-		printf("#cisfun$ ");
+		if (isatty(STDIN_FILENO))
+			printf("#cisfun$ ");
 
 		bytes_read = getline(&input, &input_size, stdin);
 		ctrl_D(bytes_read, input);
