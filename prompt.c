@@ -43,7 +43,7 @@ void prompt(char **av,char **env)
 		if (bytes_read == -1)
 		{
 			free(ptr);
-			exit(1);
+			exit(0);
 		}
 		if (*ptr != '\n')
 		{
@@ -55,7 +55,7 @@ void prompt(char **av,char **env)
 			{
 				perror("fork error");
 				free(ptr);
-				exit(1);
+				exit(0);
 			}
 
 			if (pid == 0)
