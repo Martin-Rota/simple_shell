@@ -25,8 +25,8 @@ void ctrl_D(int bytes_read, char *input)
 
 void prompt(char **av,char **env)
 {
-	char *ptr, *args;
-	ssize_t bytes_read = 0, n = 0;
+	char *ptr, **args;
+	ssize_t bytes_read = 0;
 	pid_t pid;
 	size_t input_size = 20;
 	int status;
@@ -36,7 +36,7 @@ void prompt(char **av,char **env)
 		if (isatty(STDIN_FILENO))
 			printf("#cisfun$ ");
 
-		ptr = malloc(sizeof(char) * input_size)
+		ptr = malloc(sizeof(char) * input_size);
 		bytes_read = getline(&ptr, &input_size, stdin);
 		ctrl_D(bytes_read, ptr);
 
